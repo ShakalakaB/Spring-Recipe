@@ -1,6 +1,7 @@
 package aldora.spring.recipe.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,7 +12,7 @@ public class Category {
     private String description;
 
     @ManyToMany(mappedBy = "categories")
-    private Set<Recipe> recipe;
+    private Set<Recipe> recipe = new HashSet<>();
 
     public Long getId() {
         return id;
