@@ -85,11 +85,11 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
                 "\n" +
                 "\n" +
                 "Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4jvoun5ws");
-        guacNotes.setRecipe(guacRecipe);
+//        guacNotes.setRecipe(guacRecipe);
         guacRecipe.setNotes(guacNotes);
 
-        guacRecipe.getIngredients().add(new Ingredient("ripe avocados", new BigDecimal(2), guacRecipe, eachUnit));
-        guacRecipe.getIngredients().add(new Ingredient("Kosher salt", new BigDecimal("0.5"), guacRecipe, teaspoonUnit));
+        guacRecipe.addIngredient(new Ingredient("ripe avocados", new BigDecimal(2), eachUnit));
+        guacRecipe.addIngredient(new Ingredient("Kosher salt", new BigDecimal("0.5"), teaspoonUnit));
 
         guacRecipe.getCategories().add(americanCategory);
 
