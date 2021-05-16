@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Optional;
@@ -30,6 +31,7 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
 
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         recipeRepository.saveAll(getRecipes());
         log.debug("inside recipe bootstrap");
@@ -95,6 +97,7 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
         guacRecipe.addIngredient(new Ingredient("Kosher salt", new BigDecimal("0.5"), teaspoonUnit));
 
         guacRecipe.getCategories().add(americanCategory);
+        americanCategory.getRecipe().add(guacRecipe);
 
         recipes.add(guacRecipe);
 
