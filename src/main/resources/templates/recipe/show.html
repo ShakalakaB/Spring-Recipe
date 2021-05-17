@@ -24,6 +24,7 @@
             <div class="pannel-group">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
+                        <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
                         <h1 class="panel-title" th:text="${recipe.description}">Recipe Description Here!</h1>
                     </div>
                     <div class="panel-body">
@@ -43,7 +44,8 @@
                                 <h5>Prep Time:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p th:text="${recipe.prepTime}">30 min</p>
+                                <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
+                                <p th:text="${(recipe.prepTime) + '  Min'}">30 min</p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Difficulty:</h5>
@@ -57,7 +59,7 @@
                                 <h5>Cooktime:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p th:text="${recipe.cookTime}">30 min</p>
+                                <p th:text="${(recipe.cookTime) + ' Min'}">30 min</p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Servings:</h5>
@@ -77,7 +79,8 @@
                                 <h5>URL:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p th:text="${recipe.url}">http://www.example.com</p>
+<!--                                <p><a href="#" th:href="@{recipe.url}">View Original</a></p>-->
+                                <p><a th:href="@{${recipe.url}}">View Original</a></p>
                             </div>
                         </div>
                     </div>
@@ -90,8 +93,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <ul>
-                                    <!--/*@thymesVar id="category" type="guru.springframework.domain.Ingredient"*/-->
-                                    <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient.amount} + ' ' + ${ingredient.description}">1 Cup of milk</li>
+                                    <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
+                                    <li th:each="ingredient : ${recipe.ingredients}"
+                                        th:text="${(ingredient.amount) + ' ' + (ingredient.unitOfMeasure.description)
+                                        + ' ' + ingredient.description}">1 Cup of milk</li>
                                 </ul>
                             </div>
                         </div>
