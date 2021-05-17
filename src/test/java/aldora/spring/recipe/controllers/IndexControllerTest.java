@@ -31,15 +31,10 @@ class IndexControllerTest {
 
     @Test
     void getIndexPage() {
-        Set<Recipe> recipeSet = new HashSet<>();
-        recipeSet.add(new Recipe());
-
-        when(recipeService.getRecipes()).thenReturn(recipeSet);
-
         String result = indexController.getIndexPage(model);
 
         assertEquals("index", result);
         verify(recipeService, times(1)).getRecipes();
-        verify(model, times(1)).addAttribute("recipes", recipeSet);
+        verify(model, times(1)).addAttribute(eq("recipes"), anySet());
     }
 }
