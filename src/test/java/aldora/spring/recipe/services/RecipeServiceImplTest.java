@@ -1,5 +1,7 @@
 package aldora.spring.recipe.services;
 
+import aldora.spring.recipe.converters.RecipeCommandToRecipe;
+import aldora.spring.recipe.converters.RecipeToRecipeCommand;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -21,6 +22,12 @@ class RecipeServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
     Recipe savedRecipe;
 
     @BeforeEach
@@ -30,7 +37,7 @@ class RecipeServiceImplTest {
 
         MockitoAnnotations.openMocks(this);
 
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test
