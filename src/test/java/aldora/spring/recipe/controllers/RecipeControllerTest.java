@@ -48,7 +48,7 @@ class RecipeControllerTest {
     void showById() throws Exception {
         when(recipeService.findById(anyLong())).thenReturn(savedRecipe);
 
-        mockMvc.perform(get("/recipe/1show"))
+        mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
