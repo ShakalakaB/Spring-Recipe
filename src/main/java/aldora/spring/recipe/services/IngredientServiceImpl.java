@@ -42,7 +42,8 @@ public class IngredientServiceImpl implements IngredientService {
 
         Recipe recipe = optionalRecipe.get();
 
-        Optional<IngredientCommand> optionalIngredientCommand = recipe.getIngredients().stream().filter(ingredient -> ingredient.getId().equals(ingredientId))
+        Optional<IngredientCommand> optionalIngredientCommand = recipe.getIngredients().stream()
+                .filter(ingredient -> ingredient.getId().equals(ingredientId))
                 .map(ingredientToIngredientCommand::convert).findFirst();
 
         if (optionalIngredientCommand.isEmpty()) {
