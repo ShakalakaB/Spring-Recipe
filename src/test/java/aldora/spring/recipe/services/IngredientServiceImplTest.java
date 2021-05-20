@@ -6,6 +6,7 @@ import aldora.spring.recipe.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import aldora.spring.recipe.model.Ingredient;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.repositories.RecipeRepository;
+import aldora.spring.recipe.repositories.UnitOfMeasureRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -14,25 +15,22 @@ import org.mockito.MockitoAnnotations;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.Mockito.*;
 
 class IngredientServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
-    IngredientToIngredientCommand ingredientToIngredientCommand;
+    @Mock
+    UnitOfMeasureRepository unitOfMeasureRepository;
+
     IngredientServiceImpl ingredientService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         ingredientService = new IngredientServiceImpl(recipeRepository,
-                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand())
-        );
+                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()), unitOfMeasureRepository);
     }
 
     @Test
