@@ -2,6 +2,8 @@ package aldora.spring.recipe.controllers;
 
 import aldora.spring.recipe.commands.IngredientCommand;
 import aldora.spring.recipe.commands.RecipeCommand;
+import aldora.spring.recipe.commands.UnitOfMeasureCommand;
+import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.services.IngredientService;
 import aldora.spring.recipe.services.RecipeService;
 import aldora.spring.recipe.services.UnitOfMeasureService;
@@ -45,6 +47,20 @@ public class IngredientController {
     }
 
     @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newIngredient(@PathVariable String recipeId, Model model) {
+        Recipe recipe = recipeService.findById(Long.valueOf(recipeId));
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(recipe.getId());
+        ingredientCommand.setUnitOfMeasure(new UnitOfMeasureCommand());
+        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
+
+        model.addAttribute("ingredient", ingredientCommand);
+        return "recipe/ingredient/ingredientForm";
+    }
+
+    @GetMapping
     @RequestMapping("/recipe/{recipeId}/ingredient/{ingredientId}/update")
     public String updateIngredient(@PathVariable String recipeId, @PathVariable String ingredientId, Model model) {
         IngredientCommand ingredientCommand = ingredientService
@@ -58,7 +74,7 @@ public class IngredientController {
 
     @PostMapping("/recipe/{recipeId}/ingredient")
     public String saveOrUpdate(@ModelAttribute IngredientCommand ingredientCommand, Model model) {
-        IngredientCommand savedIngredientCommand = ingredientService.updateIngredientCommand(ingredientCommand);
+        IngredientCommand savedIngredientCommand = ingredientService.saveOrUpdateIngredientCommand(ingredientCommand);
 
         model.addAttribute("ingredient", savedIngredientCommand);
 

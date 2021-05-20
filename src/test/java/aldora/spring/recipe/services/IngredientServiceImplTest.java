@@ -1,7 +1,9 @@
 package aldora.spring.recipe.services;
 
 import aldora.spring.recipe.commands.IngredientCommand;
+import aldora.spring.recipe.converters.IngredientCommandToIngredient;
 import aldora.spring.recipe.converters.IngredientToIngredientCommand;
+import aldora.spring.recipe.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import aldora.spring.recipe.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import aldora.spring.recipe.model.Ingredient;
 import aldora.spring.recipe.model.Recipe;
@@ -30,7 +32,7 @@ class IngredientServiceImplTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         ingredientService = new IngredientServiceImpl(recipeRepository,
-                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()), unitOfMeasureRepository);
+                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()), unitOfMeasureRepository, new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure()));
     }
 
     @Test
