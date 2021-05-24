@@ -4,12 +4,14 @@ import aldora.spring.recipe.commands.RecipeCommand;
 import aldora.spring.recipe.exceptions.NotFoundException;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+@Slf4j
 @Controller
 public class RecipeController {
     private final RecipeService recipeService;
@@ -57,6 +59,18 @@ public class RecipeController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public ModelAndView handleNotFound(Exception exception) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("errors/404");
+        modelAndView.addObject("exception", exception);
+
+        return modelAndView;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NumberFormatException.class)
+    public ModelAndView handleRuntimeException(Exception exception) {
+        log.error("Handling not found exception");
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("errors/404");
         modelAndView.addObject("exception", exception);
