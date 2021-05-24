@@ -1,11 +1,14 @@
 package aldora.spring.recipe.controllers;
 
 import aldora.spring.recipe.commands.RecipeCommand;
+import aldora.spring.recipe.exceptions.NotFoundException;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.services.RecipeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RecipeController {
@@ -49,5 +52,13 @@ public class RecipeController {
         recipeService.deleteById(Long.valueOf(id));
 
         return "redirect:/";
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView handleNotFound() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("errors/404");
+        return modelAndView;
     }
 }

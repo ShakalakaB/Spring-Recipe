@@ -94,7 +94,8 @@ class RecipeControllerTest {
         when(recipeService.findCommandById(anyLong())).thenThrow(NotFoundException.class);
 
         mockMvc.perform(get("/recipe/1/update"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("errors/404"));
     }
 
     @Test
