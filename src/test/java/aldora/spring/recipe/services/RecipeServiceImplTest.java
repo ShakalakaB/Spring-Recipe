@@ -2,13 +2,16 @@ package aldora.spring.recipe.services;
 
 import aldora.spring.recipe.converters.RecipeCommandToRecipe;
 import aldora.spring.recipe.converters.RecipeToRecipeCommand;
+import aldora.spring.recipe.exceptions.NotFoundException;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.repositories.RecipeRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -63,5 +66,14 @@ class RecipeServiceImplTest {
         assertNotNull(recipe, "Null recipe returned");
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
+    }
+
+    @Test
+    void findByIdNotFound() {
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            Recipe recipe = recipeService.findById(1L);
+        });
     }
 }

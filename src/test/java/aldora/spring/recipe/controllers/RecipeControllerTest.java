@@ -1,6 +1,7 @@
 package aldora.spring.recipe.controllers;
 
 import aldora.spring.recipe.commands.RecipeCommand;
+import aldora.spring.recipe.exceptions.NotFoundException;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,6 +87,14 @@ class RecipeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/recipeForm"))
                 .andExpect(model().attributeExists("recipe"));
+    }
+
+    @Test
+    void updateRecipeNotFound() throws Exception {
+        when(recipeService.findCommandById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/update"))
+                .andExpect(status().isNotFound());
     }
 
     @Test

@@ -3,6 +3,7 @@ package aldora.spring.recipe.services;
 import aldora.spring.recipe.commands.RecipeCommand;
 import aldora.spring.recipe.converters.RecipeCommandToRecipe;
 import aldora.spring.recipe.converters.RecipeToRecipeCommand;
+import aldora.spring.recipe.exceptions.NotFoundException;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,8 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> optionalRecipe = recipeRepository.findById(id);
 
         if (optionalRecipe.isEmpty()) {
-            throw new RuntimeException("Recipe Not Found");
+//            throw new RuntimeException("Recipe Not Found");
+            throw new NotFoundException("Recipe Not Found");
         }
 
         return optionalRecipe.get();
