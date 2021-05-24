@@ -42,7 +42,7 @@ public class RecipeServiceImpl implements RecipeService {
 
         if (optionalRecipe.isEmpty()) {
 //            throw new RuntimeException("Recipe Not Found");
-            throw new NotFoundException("Recipe Not Found");
+            throw new NotFoundException("Recipe Not Found. recipe id: " + id);
         }
 
         return optionalRecipe.get();
