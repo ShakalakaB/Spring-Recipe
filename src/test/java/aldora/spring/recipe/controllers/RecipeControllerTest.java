@@ -42,7 +42,9 @@ class RecipeControllerTest {
         savedRecipe = new Recipe();
         savedRecipe.setId(1L);
 
-        mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(recipeController)
+                .setControllerAdvice(new ControllerExceptionHandler())
+                .build();
     }
 
     @Test
