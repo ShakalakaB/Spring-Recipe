@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class IngredientServiceImplTest {
-    public static final long ID = 1L;
+    public static final Sting ID = "1";
     public static final String UNIT_DESC = "unit desc";
     public static final BigDecimal AMOUNT = BigDecimal.valueOf(2);
     public static final String INGREDIENT_DESC = "ingredient desc";
@@ -81,31 +81,31 @@ class IngredientServiceImplTest {
     @Test
     void findByRecipeIdAndIngredientId() {
         Ingredient ingredient1 = new Ingredient();
-        ingredient1.setId(1L);
+        ingredient1.setId("1");
 
         Ingredient ingredient2 = new Ingredient();
-        ingredient2.setId(2L);
+        ingredient2.setId("2");
 
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        recipe.setId("1");
         recipe.getIngredients().add(ingredient1);
         recipe.getIngredients().add(ingredient2);
 
-        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+        when(recipeRepository.findById(angString())).thenReturn(Optional.of(recipe));
 
         IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId(1L, 1L);
 
-        assertEquals(1L, ingredientCommand.getId());
-        verify(recipeRepository, times(1)).findById(anyLong());
+        assertEquals("1", ingredientCommand.getId());
+        verify(recipeRepository, times(1)).findById(angString());
     }
 
     @Test
     void saveIngredientCommand() {
         IngredientCommand unsavedIngredientCommand = getIngredientCommand();
         IngredientCommand ingredientCommand = getIngredientCommand();
-        ingredientCommand.setId(2L);
+        ingredientCommand.setId("2");
 
-        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(new Recipe()));
+        when(recipeRepository.findById(angString())).thenReturn(Optional.of(new Recipe()));
 
         recipe.addIngredient(ingredientCommandToIngredient.convert(ingredientCommand));
 
@@ -131,9 +131,9 @@ class IngredientServiceImplTest {
         newRecipe.setId(ID);
         newRecipe.addIngredient(ingredientCommandToIngredient.convert(ingredientCommand));
 
-        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+        when(recipeRepository.findById(angString())).thenReturn(Optional.of(recipe));
 
-        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(Optional.of(unitOfMeasure));
+        when(unitOfMeasureRepository.findById(angString())).thenReturn(Optional.of(unitOfMeasure));
         when(recipeRepository.save(any())).thenReturn(newRecipe);
 
         IngredientCommand savedIngredientCommand = ingredientService.saveOrUpdateIngredientCommand(ingredientCommand);
@@ -143,7 +143,7 @@ class IngredientServiceImplTest {
 
     private IngredientCommand getIngredientCommand() {
         UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
-        unitOfMeasureCommand.setId(2L);
+        unitOfMeasureCommand.setId("2");
 
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setUnitOfMeasure(unitOfMeasureCommand);

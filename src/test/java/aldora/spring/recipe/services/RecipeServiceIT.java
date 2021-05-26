@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //@DataJpaTest
 @SpringBootTest
 class RecipeServiceIT {
-    public static final long ID = 1L;
+    public static final String ID = "1";
     public static final String  NEW_DESCRIPTION = "description";
 
     @Autowired

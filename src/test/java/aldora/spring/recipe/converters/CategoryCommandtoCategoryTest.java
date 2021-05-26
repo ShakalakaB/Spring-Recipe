@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryCommandtoCategoryTest {
-    public static final long ID = 1L;
+    public static final String ID = "1";
     public static final String DESCRIPTION = "ca";
     CategoryCommand categoryCommand;
 

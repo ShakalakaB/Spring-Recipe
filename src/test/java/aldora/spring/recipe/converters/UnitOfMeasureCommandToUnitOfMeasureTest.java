@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UnitOfMeasureCommandToUnitOfMeasureTest {
-    public static final Long ID = 1L;
+    public static final String ID = "1";
     public static final String DESCRIPTION = "DE";
 
     UnitOfMeasureCommandToUnitOfMeasure unitOfMeasureCommandToUnitOfMeasure;

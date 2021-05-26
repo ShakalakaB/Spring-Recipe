@@ -51,7 +51,7 @@ class IndexControllerTest {
         recipesSet.add(new Recipe());
 
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        recipe.setId("1");
 
         recipesSet.add(recipe);
 

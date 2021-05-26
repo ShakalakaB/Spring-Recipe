@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class IngredientCommandToIngredientTest {
-    public final static Long ID = 1L;
+    public final static String ID = "1";
     public final static BigDecimal AMOUNT = BigDecimal.valueOf(2);
     public final static String DESCRIPTION = "de";
-    public final static Long UNIT_OF_MEASURE_ID = 1L;
+    public final static String UNIT_OF_MEASURE_ID = "1";
 
     IngredientCommand ingredientCommand;
 

@@ -36,7 +36,7 @@ class RecipeServiceImplTest {
     @BeforeEach
     void setUp() {
         savedRecipe = new Recipe();
-        savedRecipe.setId(1L);
+        savedRecipe.setId("1");
 
         MockitoAnnotations.openMocks(this);
 
@@ -59,21 +59,21 @@ class RecipeServiceImplTest {
 
     @Test
     void findById() {
-        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(savedRecipe));
+        when(recipeRepository.findById(angString())).thenReturn(Optional.of(savedRecipe));
 
-        Recipe recipe = recipeService.findById(anyLong());
+        Recipe recipe = recipeService.findById(angString());
 
         assertNotNull(recipe, "Null recipe returned");
-        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).findById(angString());
         verify(recipeRepository, never()).findAll();
     }
 
     @Test
     void findByIdNotFound() {
-        when(recipeRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(recipeRepository.findById(angString())).thenReturn(Optional.empty());
 
         Assertions.assertThrows(NotFoundException.class, () -> {
-            Recipe recipe = recipeService.findById(1L);
+            Recipe recipe = recipeService.findById("1");
         });
     }
 }

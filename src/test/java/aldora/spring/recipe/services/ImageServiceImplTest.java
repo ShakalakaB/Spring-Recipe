@@ -34,7 +34,7 @@ class ImageServiceImplTest {
 
     @Test
     void saveImageFile() throws IOException {
-        Long id = 1L;
+        String id = "1";
 
         MultipartFile image = new MockMultipartFile("imagefile", "test.txt", "text/plain",
                 "sping framework guru".getBytes());
@@ -42,9 +42,9 @@ class ImageServiceImplTest {
         Recipe recipe = new Recipe();
         recipe.setId(id);
 
-        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+        when(recipeRepository.findById(anyString())).thenReturn(Optional.of(recipe));
 
-        imageService.saveImageFile(anyLong(), image);
+        imageService.saveImageFile(anyString(), image);
 
         verify(recipeRepository).save(recipeArgumentCaptor.capture());
 
