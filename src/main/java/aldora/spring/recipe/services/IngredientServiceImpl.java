@@ -124,7 +124,6 @@ public class IngredientServiceImpl implements IngredientService {
 
         Ingredient ingredient = optionalIngredient.get();
 
-        ingredient.setRecipe(null);
         recipe.getIngredients().remove(ingredient);
 
         recipeRepository.save(recipe);

@@ -1,21 +1,13 @@
 package aldora.spring.recipe.model;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
-
-@Data
-@EqualsAndHashCode(exclude = {"recipe"})
-@Entity
+@Getter
+@Setter
 public class Notes {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-
-    @Lob
     private String recipeNotes;
-
-    @OneToOne
-    private Recipe recipe;
-
 }

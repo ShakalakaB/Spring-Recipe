@@ -1,14 +1,17 @@
 package aldora.spring.recipe.model;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 
-@Data
-@Entity
+@Getter
+@Setter
+@Document
 public class UnitOfMeasure {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String description;
 

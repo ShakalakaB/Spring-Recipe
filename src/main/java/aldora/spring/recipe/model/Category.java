@@ -1,21 +1,21 @@
 package aldora.spring.recipe.model;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
-@EqualsAndHashCode(exclude = {"recipe"})
-@Entity
+@Getter
+@Setter
+@Document
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String description;
 
-    @ManyToMany(mappedBy = "categories")
+    @DBRef
     private Set<Recipe> recipe = new HashSet<>();
-
 }

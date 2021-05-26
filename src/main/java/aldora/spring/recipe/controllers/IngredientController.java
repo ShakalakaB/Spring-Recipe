@@ -49,7 +49,6 @@ public class IngredientController {
         Recipe recipe = recipeService.findById(recipeId);
 
         IngredientCommand ingredientCommand = new IngredientCommand();
-        ingredientCommand.setRecipeId(recipe.getId());
         ingredientCommand.setUnitOfMeasure(new UnitOfMeasureCommand());
         model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
 
