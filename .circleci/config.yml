@@ -21,7 +21,14 @@ jobs:
       # Then run your tests!
       - run:
           name: Test
-          command: mvn test
+          command: mvn test cobertura:cobertura
+
+      - store_test_results:
+          path: target/surefire-reports
+
+      - run:
+          name: Send to CodeCov
+          command: bash <(curl -s https://codecov.io/bash)
 
 workflows:
   # Below is the definition of your workflow.
