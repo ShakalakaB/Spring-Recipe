@@ -59,18 +59,18 @@ class RecipeServiceImplTest {
 
     @Test
     void findById() {
-        when(recipeRepository.findById(angString())).thenReturn(Optional.of(savedRecipe));
+        when(recipeRepository.findById(anyString())).thenReturn(Optional.of(savedRecipe));
 
-        Recipe recipe = recipeService.findById(angString());
+        Recipe recipe = recipeService.findById(anyString());
 
         assertNotNull(recipe, "Null recipe returned");
-        verify(recipeRepository, times(1)).findById(angString());
+        verify(recipeRepository, times(1)).findById(anyString());
         verify(recipeRepository, never()).findAll();
     }
 
     @Test
     void findByIdNotFound() {
-        when(recipeRepository.findById(angString())).thenReturn(Optional.empty());
+        when(recipeRepository.findById(anyString())).thenReturn(Optional.empty());
 
         Assertions.assertThrows(NotFoundException.class, () -> {
             Recipe recipe = recipeService.findById("1");

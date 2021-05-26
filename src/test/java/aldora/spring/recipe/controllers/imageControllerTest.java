@@ -48,7 +48,7 @@ class ImageControllerTest {
         }
 
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        recipe.setId("1");
         recipe.setImage(bytesBoxed);
 
         when(recipeService.findById(anyString())).thenReturn(recipe);

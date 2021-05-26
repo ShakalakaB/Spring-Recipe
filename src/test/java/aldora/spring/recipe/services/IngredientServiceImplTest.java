@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class IngredientServiceImplTest {
-    public static final Sting ID = "1";
+    public static final String ID = "1";
     public static final String UNIT_DESC = "unit desc";
     public static final BigDecimal AMOUNT = BigDecimal.valueOf(2);
     public static final String INGREDIENT_DESC = "ingredient desc";
@@ -91,12 +91,12 @@ class IngredientServiceImplTest {
         recipe.getIngredients().add(ingredient1);
         recipe.getIngredients().add(ingredient2);
 
-        when(recipeRepository.findById(angString())).thenReturn(Optional.of(recipe));
+        when(recipeRepository.findById(anyString())).thenReturn(Optional.of(recipe));
 
-        IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId(1L, 1L);
+        IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId("1", "1");
 
         assertEquals("1", ingredientCommand.getId());
-        verify(recipeRepository, times(1)).findById(angString());
+        verify(recipeRepository, times(1)).findById(anyString());
     }
 
     @Test
@@ -105,7 +105,7 @@ class IngredientServiceImplTest {
         IngredientCommand ingredientCommand = getIngredientCommand();
         ingredientCommand.setId("2");
 
-        when(recipeRepository.findById(angString())).thenReturn(Optional.of(new Recipe()));
+        when(recipeRepository.findById(anyString())).thenReturn(Optional.of(new Recipe()));
 
         recipe.addIngredient(ingredientCommandToIngredient.convert(ingredientCommand));
 
@@ -131,9 +131,9 @@ class IngredientServiceImplTest {
         newRecipe.setId(ID);
         newRecipe.addIngredient(ingredientCommandToIngredient.convert(ingredientCommand));
 
-        when(recipeRepository.findById(angString())).thenReturn(Optional.of(recipe));
+        when(recipeRepository.findById(anyString())).thenReturn(Optional.of(recipe));
 
-        when(unitOfMeasureRepository.findById(angString())).thenReturn(Optional.of(unitOfMeasure));
+        when(unitOfMeasureRepository.findById(anyString())).thenReturn(Optional.of(unitOfMeasure));
         when(recipeRepository.save(any())).thenReturn(newRecipe);
 
         IngredientCommand savedIngredientCommand = ingredientService.saveOrUpdateIngredientCommand(ingredientCommand);

@@ -25,12 +25,15 @@ dependencies {
     runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.4.5'
     runtimeOnly 'com.h2database:h2:1.4.200'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.5'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
 
 group = 'aldora.spring'
 version = '0.0.1-SNAPSHOT'
 description = 'recipe'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.targetCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 publishing {
     publications {
