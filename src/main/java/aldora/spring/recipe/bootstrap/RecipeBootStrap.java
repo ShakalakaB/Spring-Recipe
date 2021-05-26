@@ -19,7 +19,7 @@ import java.util.Set;
 
 @Slf4j
 @Component
-@Profile("default")
+@Profile({"default", "dev"})
 public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEvent> {
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
