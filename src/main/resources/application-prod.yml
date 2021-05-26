@@ -3,6 +3,7 @@ spring:
     url: jdbc:mysql://localhost:3306/spring-recipe
     username: aldora
     password: Tbontb37?
+    platform: mysql
   jpa:
     hibernate:
       ddl-auto: validate
