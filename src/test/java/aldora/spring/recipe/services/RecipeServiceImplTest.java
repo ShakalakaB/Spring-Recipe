@@ -38,7 +38,7 @@ class RecipeServiceImplTest {
         savedRecipe = new Recipe();
         savedRecipe.setId("1");
 
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
 
         recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }

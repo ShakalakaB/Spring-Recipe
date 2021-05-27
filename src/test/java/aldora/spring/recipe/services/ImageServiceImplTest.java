@@ -28,7 +28,7 @@ class ImageServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
         imageService = new ImageServiceImpl(recipeRepository);
     }
 

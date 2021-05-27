@@ -72,7 +72,7 @@ class IngredientServiceImplTest {
         unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
         ingredientToIngredientCommand = new IngredientToIngredientCommand(unitOfMeasureToUnitOfMeasureCommand);
 
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
         ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
         ingredientService = new IngredientServiceImpl(recipeRepository, ingredientToIngredientCommand,
                 unitOfMeasureRepository, ingredientCommandToIngredient);
