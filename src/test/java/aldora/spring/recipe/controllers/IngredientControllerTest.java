@@ -5,8 +5,8 @@ import aldora.spring.recipe.commands.RecipeCommand;
 import aldora.spring.recipe.services.IngredientService;
 import aldora.spring.recipe.services.RecipeService;
 import aldora.spring.recipe.services.UnitOfMeasureService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.Mockito.*;
 
-class IngredientControllerTest {
+public class IngredientControllerTest {
 
     @Mock
     RecipeService recipeService;
@@ -33,8 +33,8 @@ class IngredientControllerTest {
 
     MockMvc mockMvc;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         ingredientController = new IngredientController(recipeService, ingredientService, unitOfMeasureService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController)
@@ -43,7 +43,7 @@ class IngredientControllerTest {
     }
 
     @Test
-    void listIngredients() throws Exception {
+    public void listIngredients() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
         when(recipeService.findCommandById(anyString())).thenReturn(recipeCommand);
 
@@ -56,7 +56,7 @@ class IngredientControllerTest {
     }
 
     @Test
-    void showIngredient() throws Exception {
+    public void showIngredient() throws Exception {
         IngredientCommand ingredientCommand = new IngredientCommand();
         when(ingredientService.findByRecipeIdAndIngredientId(anyString(), anyString())).thenReturn(ingredientCommand);
 

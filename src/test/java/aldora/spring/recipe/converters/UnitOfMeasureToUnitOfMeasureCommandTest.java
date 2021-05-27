@@ -2,12 +2,12 @@ package aldora.spring.recipe.converters;
 
 import aldora.spring.recipe.commands.UnitOfMeasureCommand;
 import aldora.spring.recipe.model.UnitOfMeasure;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class UnitOfMeasureToUnitOfMeasureCommandTest {
+public class UnitOfMeasureToUnitOfMeasureCommandTest {
     public static final String ID = "1";
     public static final String DESCRIPTION = "DE";
 
@@ -15,8 +15,8 @@ class UnitOfMeasureToUnitOfMeasureCommandTest {
 
     UnitOfMeasure unitOfMeasure;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
         unitOfMeasure = new UnitOfMeasure();
         unitOfMeasure.setId(ID);
@@ -24,19 +24,19 @@ class UnitOfMeasureToUnitOfMeasureCommandTest {
     }
 
     @Test
-    void convert() {
+    public void convert() {
         UnitOfMeasureCommand unitOfMeasureCommand = unitOfMeasureToUnitOfMeasureCommand.convert(unitOfMeasure);
         assertEquals(ID, unitOfMeasureCommand.getId());
     }
 
     @Test
-    void testNullObject() {
+    public void testNullObject() {
         UnitOfMeasureCommand unitOfMeasureCommand = unitOfMeasureToUnitOfMeasureCommand.convert(null);
         assertNull(unitOfMeasureCommand);
     }
 
     @Test
-    void testEmptyObject() {
+    public void testEmptyObject() {
         UnitOfMeasureCommand unitOfMeasureCommand = unitOfMeasureToUnitOfMeasureCommand.convert(new UnitOfMeasure());
         assertNotNull(unitOfMeasureCommand);
     }

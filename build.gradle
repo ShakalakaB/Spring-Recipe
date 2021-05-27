@@ -28,7 +28,7 @@ dependencies {
     implementation 'org.mongodb:mongo-java-driver:3.8.2'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.1.0.RELEASE'
     runtimeOnly 'com.h2database:h2:1.4.200'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.3.5.RELEASE'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.1.0.RELEASE'
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }

@@ -2,8 +2,8 @@ package aldora.spring.recipe.services;
 
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.repositories.RecipeRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -14,10 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-class ImageServiceImplTest {
+public class ImageServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
@@ -26,14 +26,14 @@ class ImageServiceImplTest {
     @Captor
     ArgumentCaptor<Recipe> recipeArgumentCaptor;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         imageService = new ImageServiceImpl(recipeRepository);
     }
 
     @Test
-    void saveImageFile() throws IOException {
+    public void saveImageFile() throws IOException {
         String id = "1";
 
         MultipartFile image = new MockMultipartFile("imagefile", "test.txt", "text/plain",

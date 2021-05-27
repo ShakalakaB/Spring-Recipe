@@ -2,20 +2,20 @@ package aldora.spring.recipe.converters;
 
 import aldora.spring.recipe.commands.CategoryCommand;
 import aldora.spring.recipe.model.Category;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CategoryCommandtoCategoryTest {
+public class CategoryCommandtoCategoryTest {
     public static final String ID = "1";
     public static final String DESCRIPTION = "ca";
     CategoryCommand categoryCommand;
 
     CategoryCommandtoCategory categoryCommandtoCategory;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         categoryCommandtoCategory = new CategoryCommandtoCategory();
 
         categoryCommand = new CategoryCommand();
@@ -24,20 +24,20 @@ class CategoryCommandtoCategoryTest {
     }
 
     @Test
-    void convert() {
+    public void convert() {
         Category category = categoryCommandtoCategory.convert(categoryCommand);
         assertEquals(ID, category.getId());
         assertEquals(DESCRIPTION, category.getDescription());
     }
 
     @Test
-    void testNullObject() {
+    public void testNullObject() {
         Category category = categoryCommandtoCategory.convert(null);
         assertNull(category);
     }
 
     @Test
-    void testEmptyObject() {
+    public void testEmptyObject() {
         Category category = categoryCommandtoCategory.convert(new CategoryCommand());
         assertNotNull(category);
     }

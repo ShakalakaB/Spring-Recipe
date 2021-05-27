@@ -3,15 +3,14 @@ package aldora.spring.recipe.converters;
 import aldora.spring.recipe.commands.IngredientCommand;
 import aldora.spring.recipe.commands.UnitOfMeasureCommand;
 import aldora.spring.recipe.model.Ingredient;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 
-class IngredientCommandToIngredientTest {
+public class IngredientCommandToIngredientTest {
     public final static String ID = "1";
     public final static BigDecimal AMOUNT = BigDecimal.valueOf(2);
     public final static String DESCRIPTION = "de";
@@ -23,8 +22,8 @@ class IngredientCommandToIngredientTest {
 
     IngredientCommandToIngredient ingredientCommandToIngredient;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
         ingredientCommand = new IngredientCommand();
         ingredientCommand.setId(ID);
@@ -39,20 +38,20 @@ class IngredientCommandToIngredientTest {
     }
 
     @Test
-    void convert() {
+    public void convert() {
         Ingredient ingredient = ingredientCommandToIngredient.convert(ingredientCommand);
         assertEquals(ID, ingredient.getId());
         assertEquals(DESCRIPTION, ingredient.getDescription());
     }
 
     @Test
-    void testNullObject() {
+    public void testNullObject() {
         Ingredient ingredient = ingredientCommandToIngredient.convert(null);
         assertNull(ingredient);
     }
 
     @Test
-    void testEmptyObject() {
+    public void testEmptyObject() {
         Ingredient ingredient = ingredientCommandToIngredient.convert(new IngredientCommand());
         assertNotNull(ingredient);
     }

@@ -5,21 +5,20 @@ import aldora.spring.recipe.converters.RecipeToRecipeCommand;
 import aldora.spring.recipe.exceptions.NotFoundException;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.repositories.RecipeRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
-class RecipeServiceImplTest {
+public class RecipeServiceImplTest {
     RecipeServiceImpl recipeService;
 
     @Mock
@@ -33,8 +32,8 @@ class RecipeServiceImplTest {
 
     Recipe savedRecipe;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         savedRecipe = new Recipe();
         savedRecipe.setId("1");
 
@@ -44,7 +43,7 @@ class RecipeServiceImplTest {
     }
 
     @Test
-    void getRecipes() {
+    public void getRecipes() {
         Set<Recipe> recipeSet = new HashSet<>();
         recipeSet.add(new Recipe());
 
@@ -58,22 +57,20 @@ class RecipeServiceImplTest {
     }
 
     @Test
-    void findById() {
+    public void findById() {
         when(recipeRepository.findById(anyString())).thenReturn(Optional.of(savedRecipe));
 
         Recipe recipe = recipeService.findById(anyString());
 
-        assertNotNull(recipe, "Null recipe returned");
+        assertNotNull("Null recipe returned", recipe);
         verify(recipeRepository, times(1)).findById(anyString());
         verify(recipeRepository, never()).findAll();
     }
 
-    @Test
-    void findByIdNotFound() {
+    @Test(expected = NotFoundException.class)
+    public void findByIdNotFound() {
         when(recipeRepository.findById(anyString())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(NotFoundException.class, () -> {
-            Recipe recipe = recipeService.findById("1");
-        });
+        Recipe recipe = recipeService.findById("1");
     }
 }

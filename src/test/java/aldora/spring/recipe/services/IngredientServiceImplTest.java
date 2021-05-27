@@ -11,20 +11,18 @@ import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.model.UnitOfMeasure;
 import aldora.spring.recipe.repositories.RecipeRepository;
 import aldora.spring.recipe.repositories.UnitOfMeasureRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.runner.ReactiveWebApplicationContextRunner;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-class IngredientServiceImplTest {
+public class IngredientServiceImplTest {
     public static final String ID = "1";
     public static final String UNIT_DESC = "unit desc";
     public static final BigDecimal AMOUNT = BigDecimal.valueOf(2);
@@ -51,8 +49,8 @@ class IngredientServiceImplTest {
 
     UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         unitOfMeasure = new UnitOfMeasure();
         unitOfMeasure.setId(ID);
         unitOfMeasure.setDescription(UNIT_DESC);
@@ -79,7 +77,7 @@ class IngredientServiceImplTest {
     }
 
     @Test
-    void findByRecipeIdAndIngredientId() {
+    public void findByRecipeIdAndIngredientId() {
         Ingredient ingredient1 = new Ingredient();
         ingredient1.setId("1");
 
@@ -100,7 +98,7 @@ class IngredientServiceImplTest {
     }
 
     @Test
-    void saveIngredientCommand() {
+    public void saveIngredientCommand() {
         IngredientCommand unsavedIngredientCommand = getIngredientCommand();
         IngredientCommand ingredientCommand = getIngredientCommand();
         ingredientCommand.setId("2");
@@ -119,7 +117,7 @@ class IngredientServiceImplTest {
     }
 
     @Test
-    void updateIngredientCommand() {
+    public void updateIngredientCommand() {
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setId(ID);
         ingredientCommand.setRecipeId(recipe.getId());

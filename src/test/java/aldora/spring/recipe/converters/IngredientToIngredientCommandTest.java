@@ -3,15 +3,14 @@ package aldora.spring.recipe.converters;
 import aldora.spring.recipe.commands.IngredientCommand;
 import aldora.spring.recipe.model.Ingredient;
 import aldora.spring.recipe.model.UnitOfMeasure;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class IngredientToIngredientCommandTest {
+public class IngredientToIngredientCommandTest {
     public final static String ID = "1";
     public final static BigDecimal AMOUNT = BigDecimal.valueOf(2);
     public final static String DESCRIPTION = "de";
@@ -21,8 +20,8 @@ class IngredientToIngredientCommandTest {
 
     Ingredient ingredient;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
         ingredient = new Ingredient();
         ingredient.setId(ID);
@@ -35,19 +34,19 @@ class IngredientToIngredientCommandTest {
     }
 
     @Test
-    void convert() {
+    public void convert() {
         IngredientCommand ingredientCommand = ingredientToIngredientCommand.convert(ingredient);
         assertEquals(ID, ingredientCommand.getId());
     }
 
     @Test
-    void testNullObject() {
+    public void testNullObject() {
         IngredientCommand ingredientCommand = ingredientToIngredientCommand.convert(null);
         assertNull(ingredientCommand);
     }
 
     @Test
-    void testEmptyObject() {
+    public void testEmptyObject() {
         IngredientCommand ingredientCommand = ingredientToIngredientCommand.convert(new Ingredient());
         assertNotNull(ingredientCommand);
     }

@@ -4,8 +4,8 @@ import aldora.spring.recipe.commands.RecipeCommand;
 import aldora.spring.recipe.exceptions.NotFoundException;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.services.RecipeService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
@@ -13,15 +13,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.*;
 
-class RecipeControllerTest {
+public class RecipeControllerTest {
     @Mock
     RecipeService recipeService;
 
@@ -34,8 +33,8 @@ class RecipeControllerTest {
 
     MockMvc mockMvc;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         recipeController = new RecipeController(recipeService);
 
@@ -48,7 +47,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void showById() throws Exception {
+    public void showById() throws Exception {
         when(recipeService.findById(anyString())).thenReturn(savedRecipe);
 
         mockMvc.perform(get("/recipe/1/show"))
@@ -59,7 +58,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void testGetNewRecipeForm() throws Exception {
+    public void testGetNewRecipeForm() throws Exception {
         mockMvc.perform(get("/recipe/new"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/recipeForm"))
@@ -67,7 +66,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void testSaveOrUpdateRecipe() throws Exception {
+    public void testSaveOrUpdateRecipe() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
         recipeCommand.setId("1");
 
@@ -83,7 +82,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void testSaveOrUpdateRecipeValidationFail() throws Exception {
+    public void testSaveOrUpdateRecipeValidationFail() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
         recipeCommand.setId("!");
 
@@ -95,7 +94,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void testGetUpdateView() throws Exception {
+    public void testGetUpdateView() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
         recipeCommand.setId("!");
 
@@ -108,7 +107,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void updateRecipeNotFound() throws Exception {
+    public void updateRecipeNotFound() throws Exception {
         when(recipeService.findCommandById(anyString())).thenThrow(NotFoundException.class);
 
         mockMvc.perform(get("/recipe/1/update"))
@@ -117,7 +116,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void testDelete() throws Exception {
+    public void testDelete() throws Exception {
         mockMvc.perform(get("/recipe/1/delete"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));

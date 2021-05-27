@@ -1,31 +1,30 @@
 package aldora.spring.recipe.model;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-class CategoryTest {
+public class CategoryTest {
     Category category;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         category = new Category();
     }
 
     @Test
-    void getId() {
+    public void getId() {
         String idValue = "4";
         category.setId(idValue);
         assertEquals(idValue, category.getId());
     }
 
     @Test
-    void getDescription() {
+    public void getDescription() {
     }
 
     @Test
-    void getRecipe() {
+    public void getRecipe() {
     }
 }

@@ -2,8 +2,8 @@ package aldora.spring.recipe.controllers;
 
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.services.RecipeService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -14,13 +14,13 @@ import org.springframework.ui.Model;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-class IndexControllerTest {
+public class IndexControllerTest {
     IndexController indexController;
 
     @Mock
@@ -29,14 +29,14 @@ class IndexControllerTest {
     @Mock
     RecipeService recipeService;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         indexController = new IndexController(recipeService);
     }
 
     @Test
-    void testMockMVC() throws Exception {
+    public void testMockMVC() throws Exception {
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
 
         mockMvc.perform(get("/"))
@@ -45,7 +45,7 @@ class IndexControllerTest {
     }
 
     @Test
-    void getIndexPage() {
+    public void getIndexPage() {
         Set<Recipe> recipesSet = new HashSet<>();
         recipesSet.add(new Recipe());
 

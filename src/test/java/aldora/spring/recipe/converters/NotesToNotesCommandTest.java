@@ -2,12 +2,12 @@ package aldora.spring.recipe.converters;
 
 import aldora.spring.recipe.commands.NotesCommand;
 import aldora.spring.recipe.model.Notes;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class NotesToNotesCommandTest {
+public class NotesToNotesCommandTest {
     public final static String ID = "1";
     public final static String DESCRIPTION = "DE";
 
@@ -15,8 +15,8 @@ class NotesToNotesCommandTest {
 
     Notes notes;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         notesToNotesCommand = new NotesToNotesCommand();
         notes = new Notes();
         notes.setId(ID);
@@ -24,19 +24,19 @@ class NotesToNotesCommandTest {
     }
 
     @Test
-    void convert() {
+    public void convert() {
         NotesCommand notesCommand = notesToNotesCommand.convert(notes);
         assertEquals(ID, notesCommand.getId());
     }
 
     @Test
-    void testNullObject() {
+    public void testNullObject() {
         NotesCommand notesCommand = notesToNotesCommand.convert(null);
         assertNull(notesCommand);
     }
 
     @Test
-    void testEmptyObject() {
+    public void testEmptyObject() {
         NotesCommand notesCommand = notesToNotesCommand.convert(new Notes());
         assertNotNull(notesCommand);
     }

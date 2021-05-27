@@ -4,33 +4,33 @@ import aldora.spring.recipe.commands.UnitOfMeasureCommand;
 import aldora.spring.recipe.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import aldora.spring.recipe.model.UnitOfMeasure;
 import aldora.spring.recipe.repositories.UnitOfMeasureRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-class UnitOfMeasureServiceImplTest {
+public class UnitOfMeasureServiceImplTest {
     @Mock
     UnitOfMeasureRepository unitOfMeasureRepository;
 
     UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
     UnitOfMeasureServiceImpl unitOfMeasureService;
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
         unitOfMeasureService = new UnitOfMeasureServiceImpl(unitOfMeasureRepository, unitOfMeasureToUnitOfMeasureCommand);
     }
 
     @Test
-    void findAllCommands() {
+    public void findAllCommands() {
         Set<UnitOfMeasure> unitOfMeasures = new HashSet<>();
 
         UnitOfMeasure unit1 = new UnitOfMeasure();

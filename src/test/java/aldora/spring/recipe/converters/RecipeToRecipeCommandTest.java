@@ -2,12 +2,12 @@ package aldora.spring.recipe.converters;
 
 import aldora.spring.recipe.commands.RecipeCommand;
 import aldora.spring.recipe.model.Recipe;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class RecipeToRecipeCommandTest {
+public class RecipeToRecipeCommandTest {
     public final static String ID = "1";
     public final static String DESCRIPTION = "DE";
 
@@ -15,8 +15,8 @@ class RecipeToRecipeCommandTest {
 
     RecipeToRecipeCommand recipeToRecipeCommand;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         recipeToRecipeCommand = new RecipeToRecipeCommand(
                 new NotesToNotesCommand(),
                 new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()),
@@ -29,19 +29,19 @@ class RecipeToRecipeCommandTest {
     }
 
     @Test
-    void convert() {
+    public void convert() {
         RecipeCommand recipeCommand = recipeToRecipeCommand.convert(recipe);
         assertEquals(ID, recipeCommand.getId());
     }
 
     @Test
-    void testNullObject() {
+    public void testNullObject() {
         RecipeCommand recipeCommand = recipeToRecipeCommand.convert(null);
         assertNull(recipeCommand);
     }
 
     @Test
-    void testEmptyObject() {
+    public void testEmptyObject() {
         RecipeCommand recipeCommand = recipeToRecipeCommand.convert(new Recipe());
         assertNotNull(recipeCommand);
     }

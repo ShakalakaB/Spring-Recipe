@@ -3,21 +3,20 @@ package aldora.spring.recipe.controllers;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.services.ImageService;
 import aldora.spring.recipe.services.RecipeService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-class ImageControllerTest {
+public class ImageControllerTest {
     @Mock
     RecipeService recipeService;
 
@@ -28,8 +27,8 @@ class ImageControllerTest {
 
     MockMvc mockMvc;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         imageController = new ImageController(imageService, recipeService);
 
@@ -37,7 +36,7 @@ class ImageControllerTest {
     }
 
     @Test
-    void ShowImage() throws Exception {
+    public void ShowImage() throws Exception {
         String s = "fake image text";
         Byte[] bytesBoxed = new Byte[s.getBytes().length];
 
