@@ -3,6 +3,7 @@ package aldora.spring.recipe.services;
 import aldora.spring.recipe.commands.IngredientCommand;
 import aldora.spring.recipe.converters.IngredientCommandToIngredient;
 import aldora.spring.recipe.converters.IngredientToIngredientCommand;
+import aldora.spring.recipe.exceptions.NotFoundException;
 import aldora.spring.recipe.model.Ingredient;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.repositories.RecipeRepository;
@@ -37,8 +38,8 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> optionalRecipe = recipeRepository.findById(recipeId);
 
         if (optionalRecipe.isEmpty()) {
-            //todo error hanle
             log.error("recipe id not found. Id: " + recipeId);
+            throw new NotFoundException("Recipe Not Found. recipe id: " + recipeId);
         }
 
         Recipe recipe = optionalRecipe.get();
@@ -48,9 +49,12 @@ public class IngredientServiceImpl implements IngredientService {
                 .map(ingredientToIngredientCommand::convert).findFirst();
 
         if (optionalIngredientCommand.isEmpty()) {
-            //todo error hanle
             log.error("Ingredient id not found: " + ingredientId);
+            throw new NotFoundException("Ingredient Not Found. ingredient id: " + ingredientId);
         }
+
+        IngredientCommand ingredientCommand = optionalIngredientCommand.get();
+        ingredientCommand.setRecipeId(recipeId);
 
         return optionalIngredientCommand.get();
     }
@@ -61,8 +65,8 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> optionalRecipe = recipeRepository.findById(ingredientCommand.getRecipeId());
 
         if (optionalRecipe.isEmpty()) {
-            //todo error hanle
             log.error("recipe id not found. Id: " + ingredientCommand.getRecipeId());
+            throw new NotFoundException("Recipe Not Found. recipe id: " + ingredientCommand.getRecipeId());
         }
 
         Recipe recipe = optionalRecipe.get();
@@ -70,10 +74,11 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Ingredient> optionalIngredient = recipe.getIngredients().stream().
                 filter(ingredient -> ingredient.getId().equals(ingredientCommand.getId())).findFirst();
 
+        Ingredient detachedIngredient = null;
         if (optionalIngredient.isEmpty()) {
-            //todo error hanle
             log.error("ingredient not found. Id: " + ingredientCommand.getId());
-            Ingredient detachedIngredient = ingredientCommandToIngredient.convert(ingredientCommand);
+
+            detachedIngredient = ingredientCommandToIngredient.convert(ingredientCommand);
             recipe.addIngredient(detachedIngredient);
         } else {
             Ingredient existingIngredient = optionalIngredient.get();
@@ -92,11 +97,14 @@ public class IngredientServiceImpl implements IngredientService {
                 .findFirst();
 
         if (savedOptionalIngredient.isEmpty()) {
+            Ingredient finalDetachedIngredient = detachedIngredient;
             savedOptionalIngredient = savedRecipe.getIngredients().stream()
-                    .filter(ingredient -> ingredient.getAmount().equals(ingredientCommand.getAmount()))
-                    .filter(ingredient -> ingredient.getDescription().equals(ingredientCommand.getDescription()))
-                    .filter(ingredient -> ingredient.getUnitOfMeasure().getId().equals(ingredientCommand.getUnitOfMeasure().getId()))
+                    .filter(ingredient -> ingredient.getId().equals(finalDetachedIngredient.getId()))
                     .findFirst();
+            Ingredient savedIngredient = savedOptionalIngredient.get();
+            savedIngredient.setUnitOfMeasure(unitOfMeasureRepository.findById(ingredientCommand.getUnitOfMeasure().getId())
+                    .orElseThrow(() -> new RuntimeException("unitOfMeasure Not Found")
+            ));
         }
 
         return ingredientToIngredientCommand.convert(savedOptionalIngredient.get());
@@ -107,9 +115,8 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> optionalRecipe = recipeRepository.findById(recipeId);
 
         if (optionalRecipe.isEmpty()) {
-            //todo error hanle
             log.error("recipe is not found. Id: " + recipeId);
-            throw new RuntimeException("Recipe Not Found");
+            throw new NotFoundException("Recipe Not Found");
         }
 
         Recipe recipe = optionalRecipe.get();
@@ -120,6 +127,7 @@ public class IngredientServiceImpl implements IngredientService {
 
         if (optionalIngredient.isEmpty()) {
             log.error("ingredient is not found. Id: " + ingredientId);
+            throw new NotFoundException("Ingredient Not Found");
         }
 
         Ingredient ingredient = optionalIngredient.get();
