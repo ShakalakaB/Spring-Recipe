@@ -3,21 +3,20 @@ package aldora.spring.recipe.services;
 import aldora.spring.recipe.commands.UnitOfMeasureCommand;
 import aldora.spring.recipe.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import aldora.spring.recipe.model.UnitOfMeasure;
-import aldora.spring.recipe.repositories.UnitOfMeasureRepository;
+import aldora.spring.recipe.repositories.reactive.UnitOfMeasureReactiveRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.HashSet;
-import java.util.Set;
+import reactor.core.publisher.Flux;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class UnitOfMeasureServiceImplTest {
     @Mock
-    UnitOfMeasureRepository unitOfMeasureRepository;
+    UnitOfMeasureReactiveRepository unitReactiveRepository;
 
     UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
@@ -26,27 +25,24 @@ public class UnitOfMeasureServiceImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
-        unitOfMeasureService = new UnitOfMeasureServiceImpl(unitOfMeasureRepository, unitOfMeasureToUnitOfMeasureCommand);
+        unitOfMeasureService = new UnitOfMeasureServiceImpl(unitReactiveRepository, unitOfMeasureToUnitOfMeasureCommand);
     }
 
     @Test
     public void findAllCommands() {
-        Set<UnitOfMeasure> unitOfMeasures = new HashSet<>();
-
         UnitOfMeasure unit1 = new UnitOfMeasure();
         unit1.setId("1");
 
         UnitOfMeasure unit2 = new UnitOfMeasure();
-        unit1.setId("2");
+        unit2.setId("2");
 
-        unitOfMeasures.add(unit1);
-        unitOfMeasures.add(unit2);
+        Flux<UnitOfMeasure> unitOfMeasureFlux = Flux.just(unit1, unit2);
 
-        when(unitOfMeasureRepository.findAll()).thenReturn(unitOfMeasures);
+        when(unitReactiveRepository.findAll()).thenReturn(unitOfMeasureFlux);
 
-        Set<UnitOfMeasureCommand> unitOfMeasureCommands = unitOfMeasureService.findAllCommands();
+        List<UnitOfMeasureCommand> unitOfMeasureCommands = unitOfMeasureService.findAllCommands().collectList().block();
 
         assertEquals(2, unitOfMeasureCommands.size());
-        verify(unitOfMeasureRepository, times(1)).findAll();
+        verify(unitReactiveRepository, times(1)).findAll();
     }
 }

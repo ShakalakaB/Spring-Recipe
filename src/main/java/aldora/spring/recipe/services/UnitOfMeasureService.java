@@ -1,9 +1,8 @@
 package aldora.spring.recipe.services;
 
 import aldora.spring.recipe.commands.UnitOfMeasureCommand;
-
-import java.util.Set;
+import reactor.core.publisher.Flux;
 
 public interface UnitOfMeasureService {
-    Set<UnitOfMeasureCommand> findAllCommands();
+    Flux<UnitOfMeasureCommand> findAllCommands();
 }

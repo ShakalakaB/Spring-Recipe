@@ -51,7 +51,7 @@ public class IngredientController {
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setRecipeId(recipeId);
         ingredientCommand.setUnitOfMeasure(new UnitOfMeasureCommand());
-        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
+        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands().collectList().block());
 
         model.addAttribute("ingredient", ingredientCommand);
         return "recipe/ingredient/ingredientForm";
@@ -63,7 +63,7 @@ public class IngredientController {
                 .findByRecipeIdAndIngredientId(recipeId, ingredientId);
 
         model.addAttribute("ingredient", ingredientCommand);
-        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
+        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands().collectList().block());
 
         return "recipe/ingredient/ingredientForm";
     }
