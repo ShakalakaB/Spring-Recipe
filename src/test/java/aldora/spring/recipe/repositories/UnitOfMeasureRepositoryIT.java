@@ -2,6 +2,8 @@ package aldora.spring.recipe.repositories;
 
 import aldora.spring.recipe.bootstrap.RecipeBootStrap;
 import aldora.spring.recipe.model.UnitOfMeasure;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,12 +31,15 @@ public class UnitOfMeasureRepositoryIT {
 
     @Before
     public void setUp() throws Exception {
+        RecipeBootStrap recipeBootStrap = new RecipeBootStrap(recipeRepository, unitOfMeasureRepository, categoryRepository);
+        recipeBootStrap.onApplicationEvent(null);
+    }
+
+    @After
+    public void tearDown() throws Exception {
         recipeRepository.deleteAll();
         unitOfMeasureRepository.deleteAll();
         categoryRepository.deleteAll();
-
-        RecipeBootStrap recipeBootStrap = new RecipeBootStrap(recipeRepository, unitOfMeasureRepository, categoryRepository);
-        recipeBootStrap.onApplicationEvent(null);
     }
 
     @Test

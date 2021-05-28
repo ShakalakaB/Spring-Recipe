@@ -1,11 +1,12 @@
 package aldora.spring.recipe.services;
 
 import aldora.spring.recipe.commands.IngredientCommand;
+import reactor.core.publisher.Mono;
 
 public interface IngredientService {
-    IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
+    Mono<IngredientCommand> findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
 
-    IngredientCommand saveOrUpdateIngredientCommand(IngredientCommand ingredientCommand);
+    Mono<IngredientCommand> saveOrUpdateIngredientCommand(IngredientCommand ingredientCommand);
 
-    void deleteById(String ingredientId, String recipeId);
+    Mono<Void> deleteById(String ingredientId, String recipeId);
 }
