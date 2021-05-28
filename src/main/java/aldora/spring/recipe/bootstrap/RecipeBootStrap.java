@@ -4,6 +4,8 @@ import aldora.spring.recipe.model.*;
 import aldora.spring.recipe.repositories.CategoryRepository;
 import aldora.spring.recipe.repositories.RecipeRepository;
 import aldora.spring.recipe.repositories.UnitOfMeasureRepository;
+import aldora.spring.recipe.repositories.reactive.CategoryReactiveRepository;
+import aldora.spring.recipe.repositories.reactive.RecipeReactiveRepository;
 import aldora.spring.recipe.repositories.reactive.UnitOfMeasureReactiveRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,12 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
     @Autowired
     UnitOfMeasureReactiveRepository unitReactiveRepository;
 
+    @Autowired
+    CategoryReactiveRepository categoryReactiveRepository;
+
+    @Autowired
+    RecipeReactiveRepository recipeReactiveRepository;
+
     public RecipeBootStrap(RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository,
                            CategoryRepository categoryRepository) {
         this.recipeRepository = recipeRepository;
@@ -43,8 +51,10 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
         recipeRepository.saveAll(getRecipes());
         log.info("Loading Bootstrap Data");
 
-        log.error("########");
-        log.error("units count: " + unitReactiveRepository.count().block().toString());
+        log.info("########");
+        log.info("units count: " + unitReactiveRepository.count().block().toString());
+        log.info("categories count: " + categoryReactiveRepository.count().block().toString());
+        log.info("recipe count: " + recipeReactiveRepository.count().block().toString());
     }
 
     private void loadCategories(){
