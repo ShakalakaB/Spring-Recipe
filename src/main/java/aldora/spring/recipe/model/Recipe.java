@@ -28,7 +28,6 @@ public class Recipe {
     private Notes notes;
     private Set<Ingredient> ingredients = new HashSet<>();
 
-    @DBRef
     private Set<Category> categories = new HashSet<>();
 
     public void setNotes(Notes notes) {

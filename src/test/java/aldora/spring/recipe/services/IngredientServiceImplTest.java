@@ -7,8 +7,8 @@ import aldora.spring.recipe.model.Ingredient;
 import aldora.spring.recipe.model.Recipe;
 import aldora.spring.recipe.model.UnitOfMeasure;
 import aldora.spring.recipe.repositories.RecipeRepository;
-import aldora.spring.recipe.repositories.UnitOfMeasureRepository;
 import aldora.spring.recipe.repositories.reactive.RecipeReactiveRepository;
+import aldora.spring.recipe.repositories.reactive.UnitOfMeasureReactiveRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -26,14 +26,12 @@ public class IngredientServiceImplTest {
     public static final String UNIT_DESC = "unit desc";
     public static final BigDecimal AMOUNT = BigDecimal.valueOf(2);
     public static final String INGREDIENT_DESC = "ingredient desc";
-    @Mock
-    RecipeRepository recipeRepository;
 
     @Mock
     RecipeReactiveRepository recipeReactiveRepository;
 
     @Mock
-    UnitOfMeasureRepository unitOfMeasureRepository;
+    UnitOfMeasureReactiveRepository unitReactiveRepository;
 
     IngredientServiceImpl ingredientService;
 
@@ -74,7 +72,9 @@ public class IngredientServiceImplTest {
 
         MockitoAnnotations.initMocks(this);
         ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
-        ingredientService = new IngredientServiceImpl(recipeReactiveRepository, recipeRepository, unitOfMeasureRepository, ingredientToIngredientCommand,
+
+        ingredientService = new IngredientServiceImpl(recipeReactiveRepository, unitReactiveRepository,
+                ingredientToIngredientCommand,
                 ingredientCommandToIngredient);
     }
 
@@ -105,7 +105,7 @@ public class IngredientServiceImplTest {
         IngredientCommand ingredientCommand = getIngredientCommand();
         ingredientCommand.setId("2");
 
-        when(recipeRepository.findById(anyString())).thenReturn(Optional.of(new Recipe()));
+        when(recipeReactiveRepository.findById(anyString())).thenReturn(Mono.just(new Recipe()));
 
         recipe.addIngredient(ingredientCommandToIngredient.convert(ingredientCommand));
 
@@ -131,9 +131,9 @@ public class IngredientServiceImplTest {
         newRecipe.setId(ID);
         newRecipe.addIngredient(ingredientCommandToIngredient.convert(ingredientCommand));
 
-        when(recipeRepository.findById(anyString())).thenReturn(Optional.of(recipe));
+        when(recipeReactiveRepository.findById(anyString())).thenReturn(Mono.just(recipe));
 
-        when(unitOfMeasureRepository.findById(anyString())).thenReturn(Optional.of(unitOfMeasure));
+        when(unitReactiveRepository.findById(anyString())).thenReturn(Mono.just(unitOfMeasure));
         when(recipeReactiveRepository.save(any())).thenReturn(Mono.just(newRecipe));
 
         IngredientCommand savedIngredientCommand = ingredientService.saveOrUpdateIngredientCommand(ingredientCommand).block();
