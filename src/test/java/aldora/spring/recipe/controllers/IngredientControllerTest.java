@@ -46,7 +46,7 @@ public class IngredientControllerTest {
     @Test
     public void listIngredients() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
-        when(recipeService.findCommandById(anyString())).thenReturn(recipeCommand);
+        when(recipeService.findCommandById(anyString())).thenReturn(Mono.just(recipeCommand));
 
         mockMvc.perform(get("/recipe/1/ingredients"))
                 .andExpect(status().isOk())
