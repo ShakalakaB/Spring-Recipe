@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
@@ -35,6 +36,11 @@ public class IngredientController {
     @InitBinder("ingredient")
     public void initBinder(WebDataBinder webDataBinder) {
         this.webDataBinder = webDataBinder;
+    }
+
+    @ModelAttribute("unitOfMeasures")
+    public Flux<UnitOfMeasureCommand> populateUnitOfMeasures() {
+        return unitOfMeasureService.findAllCommands();
     }
 
     @GetMapping("/recipe/{recipeId}/ingredients")
@@ -62,7 +68,7 @@ public class IngredientController {
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setRecipeId(recipeId);
         ingredientCommand.setUnitOfMeasure(new UnitOfMeasureCommand());
-        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
+//        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
 
         model.addAttribute("ingredient", ingredientCommand);
         return "recipe/ingredient/ingredientForm";
@@ -76,7 +82,7 @@ public class IngredientController {
 //        IngredientCommand ingredientCommand = ingredientCommandMono.block();
 
         model.addAttribute("ingredient", ingredientCommandMono.block());
-        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
+//        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
 
         return "recipe/ingredient/ingredientForm";
     }
@@ -91,7 +97,7 @@ public class IngredientController {
                 log.debug(objectError.toString());
             });
 
-            model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
+//            model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
             return "recipe/ingredient/ingredientForm";
         }
 
