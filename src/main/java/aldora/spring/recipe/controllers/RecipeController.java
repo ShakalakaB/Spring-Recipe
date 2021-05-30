@@ -40,9 +40,8 @@ public class RecipeController {
 
     @GetMapping("/recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
-        Mono<RecipeCommand> recipeCommandMono = recipeService.findCommandById(id);
-        RecipeCommand recipeCommand = recipeCommandMono.block();
-        model.addAttribute("recipe", recipeCommandMono);
+        RecipeCommand recipeCommand = recipeService.findCommandById(id).block();
+        model.addAttribute("recipe", recipeCommand);
 
         return "recipe/recipeForm";
     }
