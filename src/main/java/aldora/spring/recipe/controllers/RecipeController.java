@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
@@ -24,8 +25,8 @@ public class RecipeController {
 
     @GetMapping("/recipe/{id}/show")
     public String showById(@PathVariable String id, Model model) {
-        Recipe recipe = recipeService.findById(id).block();
-        model.addAttribute("recipe", recipe);
+        Mono<Recipe> recipeMono = recipeService.findById(id);
+        model.addAttribute("recipe", recipeMono);
 
         return "recipe/show";
     }
@@ -39,8 +40,9 @@ public class RecipeController {
 
     @GetMapping("/recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
-        RecipeCommand recipeCommand = recipeService.findCommandById(id).block();
-        model.addAttribute("recipe", recipeCommand);
+        Mono<RecipeCommand> recipeCommandMono = recipeService.findCommandById(id);
+        RecipeCommand recipeCommand = recipeCommandMono.block();
+        model.addAttribute("recipe", recipeCommandMono);
 
         return "recipe/recipeForm";
     }

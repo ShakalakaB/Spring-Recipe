@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @Controller
@@ -28,18 +29,18 @@ public class IngredientController {
 
     @GetMapping("/recipe/{recipeId}/ingredients")
     public String listIngredients(@PathVariable String recipeId, Model model) {
-        RecipeCommand recipe = recipeService.findCommandById(recipeId).block();
-        model.addAttribute("recipe", recipe);
+        Mono<RecipeCommand> recipeCommandMono = recipeService.findCommandById(recipeId);
+        model.addAttribute("recipe", recipeCommandMono);
 
         return "recipe/ingredient/list";
     }
 
     @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/show")
     public String showIngredient(@PathVariable String recipeId, @PathVariable String ingredientId, Model model) {
-        IngredientCommand ingredientCommand = ingredientService
-                .findByRecipeIdAndIngredientId(recipeId, ingredientId).block();
+        Mono<IngredientCommand> ingredientCommandMono = ingredientService
+                .findByRecipeIdAndIngredientId(recipeId, ingredientId);
 
-        model.addAttribute("ingredient", ingredientCommand);
+        model.addAttribute("ingredient", ingredientCommandMono);
 
         return "recipe/ingredient/show";
     }
@@ -51,7 +52,7 @@ public class IngredientController {
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setRecipeId(recipeId);
         ingredientCommand.setUnitOfMeasure(new UnitOfMeasureCommand());
-        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands().collectList().block());
+        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
 
         model.addAttribute("ingredient", ingredientCommand);
         return "recipe/ingredient/ingredientForm";
@@ -59,11 +60,11 @@ public class IngredientController {
 
     @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/update")
     public String updateIngredient(@PathVariable String recipeId, @PathVariable String ingredientId, Model model) {
-        IngredientCommand ingredientCommand = ingredientService
-                .findByRecipeIdAndIngredientId(recipeId, ingredientId).block();
+        Mono<IngredientCommand> ingredientCommandMono = ingredientService
+                .findByRecipeIdAndIngredientId(recipeId, ingredientId);
 
-        model.addAttribute("ingredient", ingredientCommand);
-        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands().collectList().block());
+        model.addAttribute("ingredient", ingredientCommandMono);
+        model.addAttribute("unitOfMeasures", unitOfMeasureService.findAllCommands());
 
         return "recipe/ingredient/ingredientForm";
     }
@@ -79,7 +80,7 @@ public class IngredientController {
 
     @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/delete")
     public String deleteIngredient(@PathVariable String recipeId, @PathVariable String ingredientId, Model model) {
-        ingredientService.deleteById(ingredientId, recipeId).block();
+        ingredientService.deleteById(ingredientId, recipeId);
 
         return  "redirect:/recipe/" + recipeId + "/ingredients";
     }
