@@ -4,11 +4,7 @@ import aldora.spring.recipe.model.*;
 import aldora.spring.recipe.repositories.CategoryRepository;
 import aldora.spring.recipe.repositories.RecipeRepository;
 import aldora.spring.recipe.repositories.UnitOfMeasureRepository;
-import aldora.spring.recipe.repositories.reactive.CategoryReactiveRepository;
-import aldora.spring.recipe.repositories.reactive.RecipeReactiveRepository;
-import aldora.spring.recipe.repositories.reactive.UnitOfMeasureReactiveRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -98,37 +94,37 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
 
         Optional<UnitOfMeasure> eachUomOptional = unitOfMeasureRepository.findByDescription("Each");
 
-        if(eachUomOptional.isEmpty()){
+        if(!eachUomOptional.isPresent()){
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> tableSpoonUomOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
 
-        if(tableSpoonUomOptional.isEmpty()){
+        if(!tableSpoonUomOptional.isPresent()){
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> teaSpoonUomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
 
-        if(teaSpoonUomOptional.isEmpty()){
+        if(!teaSpoonUomOptional.isPresent()){
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> dashUomOptional = unitOfMeasureRepository.findByDescription("Dash");
 
-        if(dashUomOptional.isEmpty()){
+        if(!dashUomOptional.isPresent()){
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> pintUomOptional = unitOfMeasureRepository.findByDescription("Pint");
 
-        if(pintUomOptional.isEmpty()){
+        if(!pintUomOptional.isPresent()){
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> cupsUomOptional = unitOfMeasureRepository.findByDescription("Cup");
 
-        if(cupsUomOptional.isEmpty()){
+        if(!cupsUomOptional.isPresent()){
             throw new RuntimeException("Expected UOM Not Found");
         }
 
@@ -143,13 +139,13 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
         //get Categories
         Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
 
-        if(americanCategoryOptional.isEmpty()){
+        if(!americanCategoryOptional.isPresent()){
             throw new RuntimeException("Expected Category Not Found");
         }
 
         Optional<Category> mexicanCategoryOptional = categoryRepository.findByDescription("Mexican");
 
-        if(mexicanCategoryOptional.isEmpty()){
+        if(!mexicanCategoryOptional.isPresent()){
             throw new RuntimeException("Expected Category Not Found");
         }
 

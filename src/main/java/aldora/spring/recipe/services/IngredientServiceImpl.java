@@ -63,7 +63,7 @@ public class IngredientServiceImpl implements IngredientService {
     public Mono<IngredientCommand> saveOrUpdateIngredientCommand(IngredientCommand ingredientCommand) {
         Optional<Recipe> optionalRecipe = recipeReactiveRepository.findById(ingredientCommand.getRecipeId()).blockOptional();
 
-        if (optionalRecipe.isEmpty()) {
+        if (!optionalRecipe.isPresent()) {
             log.error("recipe id not found. Id: " + ingredientCommand.getRecipeId());
             return Mono.just(new IngredientCommand());
         }
@@ -74,7 +74,7 @@ public class IngredientServiceImpl implements IngredientService {
                 filter(ingredient -> ingredient.getId().equals(ingredientCommand.getId())).findFirst();
 
         Ingredient detachedIngredient = null;
-        if (optionalIngredient.isEmpty()) {
+        if (!optionalIngredient.isPresent()) {
             log.error("ingredient not found. Id: " + ingredientCommand.getId());
 
             detachedIngredient = ingredientCommandToIngredient.convert(ingredientCommand);
@@ -93,7 +93,7 @@ public class IngredientServiceImpl implements IngredientService {
                 .filter(ingredient -> ingredient.getId().equals(ingredientCommand.getId()))
                 .findFirst();
 
-        if (savedOptionalIngredient.isEmpty()) {
+        if (!savedOptionalIngredient.isPresent()) {
             Ingredient finalDetachedIngredient = detachedIngredient;
 
             savedOptionalIngredient = savedRecipe.getIngredients().stream()
@@ -116,7 +116,7 @@ public class IngredientServiceImpl implements IngredientService {
     public Mono<Void> deleteById(String ingredientId, String recipeId) {
         Optional<Recipe> optionalRecipe = recipeReactiveRepository.findById(recipeId).blockOptional();
 
-        if (optionalRecipe.isEmpty()) {
+        if (!optionalRecipe.isPresent()) {
             log.error("recipe is not found. Id: " + recipeId);
             return Mono.empty();
         }
@@ -127,7 +127,7 @@ public class IngredientServiceImpl implements IngredientService {
                 filter(ingredient -> ingredient.getId().equals(ingredientId))
                 .findFirst();
 
-        if (optionalIngredient.isEmpty()) {
+        if (!optionalIngredient.isPresent()) {
             log.error("ingredient is not found. Id: " + ingredientId);
             return Mono.empty();
         }

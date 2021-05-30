@@ -24,7 +24,7 @@ public class ImageServiceImpl implements ImageService {
     public Mono<Void> saveImageFile(String recipeId, MultipartFile file) {
         Optional<Recipe> optionalRecipe = recipeReactiveRepository.findById(recipeId).blockOptional();
 
-        if (optionalRecipe.isEmpty()) {
+        if (!optionalRecipe.isPresent()) {
             log.error("recipe is not found. id: " + recipeId);
         }
 
