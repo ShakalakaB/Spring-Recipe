@@ -42,7 +42,7 @@ public class RecipeServiceIT {
         recipeCommand.setId(ID);
     }
 
-    @Transactional
+//    @Transactional
     @Test
     public void saveRecipeCommand() {
         Iterable<Recipe> recipes = recipeRepository.findAll();
